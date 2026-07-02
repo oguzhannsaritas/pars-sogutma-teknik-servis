@@ -30,9 +30,9 @@ export default function Footer() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10"
+        className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10"
       >
-        <motion.div variants={item} className="lg:col-span-2">
+        <motion.div variants={item} className="col-span-2">
           <div className="text-xl md:text-2xl font-black">
             <span className="text-white">Pars Soğutma</span> <span className="text-white">Teknik Servis</span>
           </div>
@@ -58,7 +58,7 @@ export default function Footer() {
         </motion.div>
 
         {cols.map((c) => (
-          <motion.div key={c.title} variants={item}>
+          <motion.div key={c.title} variants={item} className="text-center lg:text-left">
             <h4 className="text-white font-black text-xs md:text-base mb-4">{c.title}</h4>
             <ul className="space-y-2">
               {c.links.map((l) => (
