@@ -4,11 +4,22 @@ import { TwitterIcon, FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, Pi
 const cols = [
   {
     title: "Kurumsal",
-    links: ["Hakkımızda", "Hizmetlerimiz", "SSS", "İletişim", "Yasal Şartlar", "Gizlilik"],
+    links: [
+      { label: "Hakkımızda", href: "#about" },
+      { label: "Hizmetlerimiz", href: "#services" },
+      { label: "SSS", href: "#faq" },
+      { label: "İletişim", href: "#contact" },
+    ],
   },
   {
     title: "Hizmetlerimiz",
-    links: ["Soğutma", "Soğuk Hava", "Soğuk Oda", "Chiller", "Buzhane"],
+    links: [
+      { label: "Soğutma", href: "#services" },
+      { label: "Soğuk Hava", href: "#services" },
+      { label: "Soğuk Oda", href: "#services" },
+      { label: "Chiller", href: "#services" },
+      { label: "Buzhane", href: "#services" },
+    ],
   },
 ];
 
@@ -62,8 +73,8 @@ export default function Footer() {
             <h4 className="text-white font-black text-xs md:text-base mb-4">{c.title}</h4>
             <ul className="space-y-2">
               {c.links.map((l) => (
-                <li key={l}>
-                  <a href="#" className="hover:text-primary transition-colors text-xs md:text-sm">{l}</a>
+                <li key={l.label}>
+                  <a href={l.href} className="hover:text-primary transition-colors text-xs md:text-sm">{l.label}</a>
                 </li>
               ))}
             </ul>
