@@ -6,6 +6,7 @@ const links = [
   { label: "Anasayfa", href: "#hero" },
   { label: "Hakkımızda", href: "#about" },
   { label: "Hizmetlerimiz", href: "#services" },
+  { label: "Sektörler", href: "#sectors" },
   { label: "SSS", href: "#faq" },
   { label: "İletişim", href: "#contact" },
 ];

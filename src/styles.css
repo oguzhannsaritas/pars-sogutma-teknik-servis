@@ -33,3 +33,11 @@ body {
 @layer base {
   * { border-color: #e5e7eb; }
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

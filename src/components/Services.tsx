@@ -5,7 +5,7 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 const services = [
   { icon: Snowflake, title: "Soğutma Servisi", desc: "Tüm endüstriyel soğutma cihazlarınız için kapsamlı bakım ve onarım hizmeti." },
   { icon: Warehouse, title: "Soğuk Oda Servisi", desc: "Soğuk oda kurulum, bakım, arıza tespit ve onarım hizmetlerinde uzman ekip." },
-  { icon: Thermometer, title: "Soğuk Hava Deposu Servisi", desc: "Soğuk hava depolarınızın sürekli verim sağlaması için periyodik servis." },
+  { icon: Thermometer, title: "Soğuk Hava Deposu Kurulumu", desc: "Anahtar teslim soğuk hava deposu kurulumu ve sürekli verim için periyodik bakım servisi." },
   { icon: Container, title: "Buzhane Servisi", desc: "Buzhane sistemlerinizin enerji verimli çalışması için bakım hizmeti." },
   { icon: Milk, title: "Sütlük Tamiri", desc: "Süt soğutma tanklarınızın tamiri, bakımı ve yedek parça desteği." },
   { icon: ShoppingCart, title: "Reyon Dolabı Servisi", desc: "Market reyonu ve teşhir dolaplarınız için hızlı ve garantili servis." },
