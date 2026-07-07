@@ -8,19 +8,35 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import ServiceDetail from "@/pages/ServiceDetail";
+import { getServiceByPath } from "@/data/services";
+import SEO from "@/components/SEO";
+import { getHomeSeo, getServiceSeo } from "@/lib/seo-data";
 
 export default function App() {
+  const service = getServiceByPath(window.location.pathname);
+  const seo = service ? getServiceSeo(service) : getHomeSeo();
+
   return (
     <div className="bg-white">
+      <SEO seo={seo} />
       <Navbar />
-      <Hero />
+      {service ? (
+        <ServiceDetail service={service} />
+      ) : (
+        <>
+          <Hero />
+          <div className="relative">
+            <About />
+            <Stats />
+            <Services />
+            <Sectors />
+            <FAQ />
+            <Contact />
+          </div>
+        </>
+      )}
       <div className="relative">
-        <About />
-        <Stats />
-        <Services />
-        <Sectors />
-        <FAQ />
-        <Contact />
         <Footer />
       </div>
       <WhatsAppFloat />

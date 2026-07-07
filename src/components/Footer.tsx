@@ -1,25 +1,20 @@
 import { motion } from "framer-motion";
 import { TwitterIcon, FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, PinterestIcon } from "./SocialIcons";
+import { services } from "@/data/services";
 
 const cols = [
   {
     title: "Kurumsal",
     links: [
-      { label: "Hakkımızda", href: "#about" },
-      { label: "Hizmetlerimiz", href: "#services" },
-      { label: "SSS", href: "#faq" },
-      { label: "İletişim", href: "#contact" },
+      { label: "Hakkımızda", href: "/#about" },
+      { label: "Hizmetlerimiz", href: "/#services" },
+      { label: "SSS", href: "/#faq" },
+      { label: "İletişim", href: "/#contact" },
     ],
   },
   {
     title: "Hizmetlerimiz",
-    links: [
-      { label: "Soğutma", href: "#services" },
-      { label: "Soğuk Hava", href: "#services" },
-      { label: "Soğuk Oda", href: "#services" },
-      { label: "Chiller", href: "#services" },
-      { label: "Buzhane", href: "#services" },
-    ],
+    links: services.map((service) => ({ label: service.title, href: service.path })),
   },
 ];
 

@@ -9,18 +9,24 @@ type Sector = {
   icon: typeof Hotel;
   title: string;
   desc: string;
-  imageCount: number;
-  extOverrides?: Record<number, string>;
 };
 
 const sectors: Sector[] = [
-  { slug: "oteller", icon: Hotel, title: "Oteller", desc: "Otellerin mutfak, restoran ve depo soğutma sistemlerinde kesintisiz hizmet.", imageCount: 8, extOverrides: { 1: "jpg", 2: "jpg", 4: "jpg", 5: "jpg", 6: "jpg", 7: "png", 8: "jpg" } },
-  { slug: "restoranlar", icon: UtensilsCrossed, title: "Restoranlar", desc: "Restoran mutfaklarındaki soğuk oda ve teşhir dolaplarının bakım ve onarımı.", imageCount: 7 },
-  { slug: "firin-pastane", icon: Croissant, title: "Fırın & Pastaneler", desc: "Fırın ve pastanelerin hamur mayalama, soğutma ve saklama üniteleri için servis.", imageCount: 12, extOverrides: { 12: "jpg" } },
-  { slug: "kafeler", icon: Coffee, title: "Kafeler", desc: "Kafelerin içecek soğutucuları ve vitrin dolaplarına hızlı teknik destek.", imageCount: 7 },
-  { slug: "marketler", icon: Store, title: "Marketler", desc: "Market ve süpermarket reyon dolapları, depo soğutmasının periyodik bakımı.", imageCount: 8 },
-  { slug: "gida-uretim", icon: ChefHat, title: "Gıda Üretim Tesisleri", desc: "Gıda üretim ve toptan satış tesislerinin soğuk zincir altyapısına profesyonel servis.", imageCount: 7 },
+  { slug: "oteller", icon: Hotel, title: "Oteller", desc: "Otellerin mutfak, restoran ve depo soğutma sistemlerinde kesintisiz hizmet." },
+  { slug: "restoranlar", icon: UtensilsCrossed, title: "Restoranlar", desc: "Restoran mutfaklarındaki soğuk oda ve teşhir dolaplarının bakım ve onarımı." },
+  { slug: "firin-pastane", icon: Croissant, title: "Fırın & Pastaneler", desc: "Fırın ve pastanelerin hamur mayalama, soğutma ve saklama üniteleri için servis." },
+  { slug: "kafeler", icon: Coffee, title: "Kafeler", desc: "Kafelerin içecek soğutucuları ve vitrin dolaplarına hızlı teknik destek." },
+  { slug: "marketler", icon: Store, title: "Marketler", desc: "Market ve süpermarket reyon dolapları, depo soğutmasının periyodik bakımı." },
+  { slug: "gida-uretim", icon: ChefHat, title: "Gıda Üretim Tesisleri", desc: "Gıda üretim ve toptan satış tesislerinin soğuk zincir altyapısına profesyonel servis." },
 ];
+
+type SectorGalleryImage = {
+  src: string;
+  alt: string;
+};
+
+const sectorImageExtensions = ["webp", "jpg", "jpeg", "png"] as const;
+const maxSectorImageCount = 80;
 
 function SectorImage({ src, icon: Icon, alt }: { src: string; icon: Sector["icon"]; alt: string }) {
   const [error, setError] = useState(false);
@@ -38,21 +44,74 @@ function SectorImage({ src, icon: Icon, alt }: { src: string; icon: Sector["icon
       src={src}
       alt={alt}
       onError={() => setError(true)}
-      className="aspect-square rounded-xl object-cover w-full h-full"
+      className="aspect-square rounded-xl object-center bg-[#f1f5f9] w-full h-full"
     />
   );
 }
 
 const PAGE_SIZE = 4;
 
+const probeImage = (src: string) =>
+  new Promise<boolean>((resolve) => {
+    const image = new Image();
+    image.onload = () => resolve(true);
+    image.onerror = () => resolve(false);
+    image.src = src;
+  });
+
+async function findSectorImage(sector: Sector, index: number) {
+  for (const ext of sectorImageExtensions) {
+    const src = `/sectors/${sector.slug}/${index}.${ext}`;
+    if (await probeImage(src)) {
+      return {
+        src,
+        alt: `${sector.title} ${index}`,
+      };
+    }
+  }
+
+  return null;
+}
+
+function useSectorImages(sector: Sector) {
+  const [images, setImages] = useState<SectorGalleryImage[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadImages() {
+      const nextImages: SectorGalleryImage[] = [];
+
+      for (let index = 1; index <= maxSectorImageCount; index += 1) {
+        const image = await findSectorImage(sector, index);
+        if (cancelled) return;
+        if (!image) break;
+        nextImages.push(image);
+      }
+
+      setImages(nextImages);
+    }
+
+    setImages([]);
+    loadImages();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sector]);
+
+  return images;
+}
+
 function SectorGallery({ sector }: { sector: Sector }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const images = useSectorImages(sector);
 
-  const pageCount = Math.ceil(sector.imageCount / PAGE_SIZE);
+  const pageCount = Math.ceil(images.length / PAGE_SIZE);
   const pages = Array.from({ length: pageCount }, (_, p) =>
-    Array.from({ length: Math.min(PAGE_SIZE, sector.imageCount - p * PAGE_SIZE) }, (_, k) => p * PAGE_SIZE + k)
+    images.slice(p * PAGE_SIZE, p * PAGE_SIZE + PAGE_SIZE)
   );
 
   const updateScrollState = () => {
@@ -69,7 +128,7 @@ function SectorGallery({ sector }: { sector: Sector }) {
     const ro = new ResizeObserver(updateScrollState);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [sector]);
+  }, [sector, images.length]);
 
   const scrollByPage = (dir: 1 | -1) => {
     const el = scrollerRef.current;
@@ -86,12 +145,12 @@ function SectorGallery({ sector }: { sector: Sector }) {
       >
         {pages.map((indices, p) => (
           <div key={p} className="grid grid-cols-2 grid-rows-2 gap-3 shrink-0 w-full snap-start">
-            {indices.map((i) => (
+            {indices.map((image) => (
               <SectorImage
-                key={i}
-                src={`/sectors/${sector.slug}/${i + 1}.${sector.extOverrides?.[i + 1] ?? "webp"}`}
+                key={image.src}
+                src={image.src}
                 icon={sector.icon}
-                alt={`${sector.title} ${i + 1}`}
+                alt={image.alt}
               />
             ))}
           </div>
@@ -165,7 +224,9 @@ export default function Sectors() {
                 >
                   <s.icon size={26} />
                 </motion.div>
-                <ArrowUpRight className="text-gray-300" size={18} />
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-[#f1f5f9] text-black shadow-sm">
+                  <ArrowUpRight size={18} />
+                </span>
               </div>
               <h3 className="text-base md:text-xl font-black text-gray-900">{s.title}</h3>
               <p className="text-muted-foreground text-xs md:text-base mt-2">{s.desc}</p>

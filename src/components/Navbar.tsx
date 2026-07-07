@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 
 const links = [
-  { label: "Anasayfa", href: "#hero" },
-  { label: "Hakkımızda", href: "#about" },
-  { label: "Hizmetlerimiz", href: "#services" },
-  { label: "Sektörler", href: "#sectors" },
-  { label: "SSS", href: "#faq" },
-  { label: "İletişim", href: "#contact" },
+  { label: "Anasayfa", href: "#hero", id: "hero" },
+  { label: "Hakkımızda", href: "#about", id: "about" },
+  { label: "Hizmetlerimiz", href: "#services", id: "services" },
+  { label: "Sektörler", href: "#sectors", id: "sectors" },
+  { label: "SSS", href: "#faq", id: "faq" },
+  { label: "İletişim", href: "#contact", id: "contact" },
 ];
 
 export default function Navbar() {
+  const isHome = window.location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -22,7 +23,9 @@ export default function Navbar() {
   }, [scrollY]);
 
   useEffect(() => {
-    const ids = links.map((l) => l.href.replace("#", ""));
+    if (!isHome) return;
+
+    const ids = links.map((l) => l.id);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -36,7 +39,9 @@ export default function Navbar() {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
+
+  const getLinkHref = (href: string) => (isHome ? href : `/${href}`);
 
   return (
     <>
@@ -47,16 +52,16 @@ export default function Navbar() {
         className={`sticky top-0 z-50 bg-white transition-shadow overflow-visible ${scrolled ? "shadow-md" : ""}`}
       >
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <a href="#hero" className="flex items-center">
+          <a href={isHome ? "#hero" : "/"} className="flex items-center">
             <img src="/pars-logo.png" alt="Pars Soğutma Servis" className="h-12 sm:h-14 md:h-20 w-auto object-contain" />
           </a>
           <div className="hidden lg:flex items-center gap-8">
             {links.map((l) => {
-              const isActive = activeSection === l.href.replace("#", "");
+              const isActive = isHome && activeSection === l.id;
               return (
                 <a
                   key={l.href}
-                  href={l.href}
+                  href={getLinkHref(l.href)}
                   className={`relative font-bold transition-colors pb-1 ${
                     isActive ? "text-primary" : "text-gray-700 hover:text-primary"
                   }`}
@@ -125,11 +130,11 @@ export default function Navbar() {
 
               <div className="px-6 pt-4 pb-10 flex flex-col">
                 {links.map((l) => {
-                  const isActive = activeSection === l.href.replace("#", "");
+                  const isActive = isHome && activeSection === l.id;
                   return (
                     <a
                       key={l.href}
-                      href={l.href}
+                      href={getLinkHref(l.href)}
                       onClick={() => setOpen(false)}
                       className={`font-bold text-lg py-4 border-b border-gray-100 transition-colors ${
                         isActive ? "text-primary" : "text-gray-800"
