@@ -41,7 +41,7 @@ export const absoluteUrl = (path = "/") => {
   return new URL(path, siteConfig.url).toString();
 };
 
-const defaultImage = absoluteUrl("/teknik-servis.png");
+const defaultImage = absoluteUrl("/teknik-servis.webp");
 const getStaticServiceCoverImage = (service: Service) => `/services/${service.imageFolder}/1.webp`;
 
 const localBusinessSchema = () => ({
@@ -50,7 +50,7 @@ const localBusinessSchema = () => ({
   "@id": `${siteConfig.url}/#business`,
   name: siteConfig.name,
   url: siteConfig.url,
-  logo: absoluteUrl("/pars-logo.png"),
+  logo: absoluteUrl("/pars-logo.webp"),
   image: defaultImage,
   description: siteConfig.description,
   telephone: siteConfig.phone,

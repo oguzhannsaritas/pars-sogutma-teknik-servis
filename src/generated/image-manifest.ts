@@ -258,7 +258,7 @@ export const sectorImageManifest = {
     "/sectors/firin-pastane/9.webp",
     "/sectors/firin-pastane/10.webp",
     "/sectors/firin-pastane/11.webp",
-    "/sectors/firin-pastane/12.jpg"
+    "/sectors/firin-pastane/12.webp"
   ],
   "gida-uretim": [
     "/sectors/gida-uretim/1.webp",
@@ -289,16 +289,16 @@ export const sectorImageManifest = {
     "/sectors/marketler/8.webp"
   ],
   "oteller": [
-    "/sectors/oteller/1.jpg",
-    "/sectors/oteller/2.jpg",
+    "/sectors/oteller/1.webp",
+    "/sectors/oteller/2.webp",
     "/sectors/oteller/3.webp",
-    "/sectors/oteller/4.jpg",
-    "/sectors/oteller/5.jpg",
-    "/sectors/oteller/6.jpg",
-    "/sectors/oteller/7.png",
-    "/sectors/oteller/8.jpg",
-    "/sectors/oteller/9.jpg",
-    "/sectors/oteller/10.jpg",
+    "/sectors/oteller/4.webp",
+    "/sectors/oteller/5.webp",
+    "/sectors/oteller/6.webp",
+    "/sectors/oteller/7.webp",
+    "/sectors/oteller/8.webp",
+    "/sectors/oteller/9.webp",
+    "/sectors/oteller/10.webp",
     "/sectors/oteller/11.webp",
     "/sectors/oteller/12.webp",
     "/sectors/oteller/13.webp",

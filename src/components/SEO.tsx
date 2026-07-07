@@ -29,7 +29,7 @@ const setCanonical = (href: string) => {
 export default function SEO({ seo }: { seo: SeoConfig }) {
   useEffect(() => {
     const url = absoluteUrl(seo.path);
-    const image = seo.image ?? absoluteUrl("/teknik-servis.png");
+    const image = seo.image ?? absoluteUrl("/teknik-servis.webp");
 
     document.title = seo.title;
     setMeta("name", "description", seo.description);

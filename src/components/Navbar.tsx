@@ -53,7 +53,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <a href={isHome ? "#hero" : "/"} className="flex items-center">
-            <img src="/pars-logo.png" alt="Pars Soğutma Servis" className="h-12 sm:h-14 md:h-20 w-auto object-contain" />
+            <img src="/pars-logo.webp" alt="Pars Soğutma Servis" decoding="async" className="h-12 sm:h-14 md:h-20 w-auto object-contain" />
           </a>
           <div className="hidden lg:flex items-center gap-8">
             {links.map((l) => {

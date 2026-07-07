@@ -41,6 +41,8 @@ function SectorImage({ src, icon: Icon, alt }: { src: string; icon: Sector["icon
     <img
       src={src}
       alt={alt}
+      loading="lazy"
+      decoding="async"
       onError={() => setError(true)}
       className="aspect-square rounded-xl object-contain object-center bg-[#f1f5f9] w-full h-full"
     />

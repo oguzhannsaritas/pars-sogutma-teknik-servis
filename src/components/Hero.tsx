@@ -18,14 +18,18 @@ export default function Hero() {
     >
       {/* Arka plan resmi — mobil */}
       <img
-        src="/teknik-servis-mobil.png"
+        src="/teknik-servis-mobil.webp"
         alt=""
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 w-full h-full object-cover object-center md:hidden"
       />
       {/* Arka plan resmi — masaüstü */}
       <img
-        src="/teknik-servis.png"
+        src="/teknik-servis.webp"
         alt=""
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
       />
       {/* Koyu overlay */}

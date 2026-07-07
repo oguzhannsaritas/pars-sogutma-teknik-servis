@@ -85,6 +85,7 @@ function ServiceGallery({ service }: ServiceDetailProps) {
                 src={image.src}
                 alt={image.alt}
                 loading="lazy"
+                decoding="async"
                 className="aspect-[4/3] w-full bg-primary-light object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </motion.button>
@@ -111,6 +112,7 @@ function ServiceGallery({ service }: ServiceDetailProps) {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
+                decoding="async"
                 className="max-h-[calc(100dvh-6rem)] w-auto max-w-[calc(100dvw-2rem)] object-contain md:max-h-[calc(100dvh-5rem)] md:max-w-[min(82vw,1160px)]"
               />
 
