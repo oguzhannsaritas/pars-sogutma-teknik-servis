@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Hotel, UtensilsCrossed, Croissant, Coffee, Store, ChefHat, Phone, Images, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { sectorImageManifest } from "@/generated/image-manifest";
 
 type Sector = {
   slug: string;
@@ -25,9 +26,6 @@ type SectorGalleryImage = {
   alt: string;
 };
 
-const sectorImageExtensions = ["webp", "jpg", "jpeg", "png"] as const;
-const maxSectorImageCount = 80;
-
 function SectorImage({ src, icon: Icon, alt }: { src: string; icon: Sector["icon"]; alt: string }) {
   const [error, setError] = useState(false);
 
@@ -44,70 +42,27 @@ function SectorImage({ src, icon: Icon, alt }: { src: string; icon: Sector["icon
       src={src}
       alt={alt}
       onError={() => setError(true)}
-      className="aspect-square rounded-xl object-center bg-[#f1f5f9] w-full h-full"
+      className="aspect-square rounded-xl object-contain object-center bg-[#f1f5f9] w-full h-full"
     />
   );
 }
 
 const PAGE_SIZE = 4;
 
-const probeImage = (src: string) =>
-  new Promise<boolean>((resolve) => {
-    const image = new Image();
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
-    image.src = src;
-  });
+const getSectorImages = (sector: Sector): SectorGalleryImage[] => {
+  const images = sectorImageManifest[sector.slug as keyof typeof sectorImageManifest] ?? [];
 
-async function findSectorImage(sector: Sector, index: number) {
-  for (const ext of sectorImageExtensions) {
-    const src = `/sectors/${sector.slug}/${index}.${ext}`;
-    if (await probeImage(src)) {
-      return {
-        src,
-        alt: `${sector.title} ${index}`,
-      };
-    }
-  }
-
-  return null;
-}
-
-function useSectorImages(sector: Sector) {
-  const [images, setImages] = useState<SectorGalleryImage[]>([]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadImages() {
-      const nextImages: SectorGalleryImage[] = [];
-
-      for (let index = 1; index <= maxSectorImageCount; index += 1) {
-        const image = await findSectorImage(sector, index);
-        if (cancelled) return;
-        if (!image) break;
-        nextImages.push(image);
-      }
-
-      setImages(nextImages);
-    }
-
-    setImages([]);
-    loadImages();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [sector]);
-
-  return images;
-}
+  return images.map((src, index) => ({
+    src,
+    alt: `${sector.title} ${index + 1}`,
+  }));
+};
 
 function SectorGallery({ sector }: { sector: Sector }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  const images = useSectorImages(sector);
+  const images = getSectorImages(sector);
 
   const pageCount = Math.ceil(images.length / PAGE_SIZE);
   const pages = Array.from({ length: pageCount }, (_, p) =>

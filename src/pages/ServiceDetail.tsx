@@ -98,7 +98,7 @@ function ServiceGallery({ service }: ServiceDetailProps) {
             if (event.key === "ArrowLeft") showPreviousImage();
             if (event.key === "ArrowRight") showNextImage();
           }}
-          className="inset-0 left-0 top-0 h-dvh w-screen max-w-none translate-x-0 translate-y-0 place-items-center gap-0 border-0 bg-transparent p-4 shadow-none outline-none sm:rounded-none md:p-6 [&>button]:fixed [&>button]:right-4 [&>button]:top-4 [&>button]:z-30 [&>button]:flex [&>button]:h-12 [&>button]:w-12 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-none [&>button]:bg-transparent [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-none [&>button_svg]:h-8 [&>button_svg]:w-8"
+          className="inset-0 left-0 top-0 h-dvh w-full max-w-full translate-x-0 translate-y-0 place-items-center gap-0 border-0 bg-transparent p-4 shadow-none outline-none sm:rounded-none md:p-6 [&>button]:fixed [&>button]:right-4 [&>button]:top-4 [&>button]:z-30 [&>button]:flex [&>button]:h-12 [&>button]:w-12 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-none [&>button]:bg-transparent [&>button]:text-white [&>button]:opacity-100 [&>button]:shadow-none [&>button_svg]:h-8 [&>button_svg]:w-8"
         >
           {selectedImage && (
             <div
@@ -111,7 +111,7 @@ function ServiceGallery({ service }: ServiceDetailProps) {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="max-h-[calc(100dvh-6rem)] w-auto max-w-[calc(100vw-2rem)] object-contain md:max-h-[calc(100dvh-5rem)] md:max-w-[min(82vw,1160px)]"
+                className="max-h-[calc(100dvh-6rem)] w-auto max-w-[calc(100dvw-2rem)] object-contain md:max-h-[calc(100dvh-5rem)] md:max-w-[min(82vw,1160px)]"
               />
 
               {hasMultipleImages && (

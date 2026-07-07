@@ -18,6 +18,14 @@
   --radius-2xl: 1rem;
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -27,7 +35,21 @@ body {
   background: #ffffff;
   color: #111827;
   font-weight: 600;
-  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body,
+  #root {
+    overflow-x: hidden;
+  }
 }
 
 @layer base {
