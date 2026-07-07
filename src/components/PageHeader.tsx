@@ -18,7 +18,7 @@ export default function PageHeader({ title, breadcrumbs }: PageHeaderProps) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="break-words text-[36px] font-black uppercase leading-tight tracking-tight [overflow-wrap:anywhere]"
+          className="break-words text-xl font-black uppercase leading-tight tracking-tight [overflow-wrap:anywhere] md:text-2xl"
         >
           {title}
         </motion.h1>
@@ -28,7 +28,7 @@ export default function PageHeader({ title, breadcrumbs }: PageHeaderProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.08 }}
           aria-label="Breadcrumb"
-          className="mt-4 flex max-w-full min-w-0 flex-wrap items-center justify-center gap-2 text-[24px] font-black uppercase leading-snug tracking-widest"
+          className="mt-3 flex max-w-full min-w-0 flex-wrap items-center justify-center gap-2 text-xs font-black uppercase leading-snug tracking-widest md:text-sm"
         >
           {breadcrumbs.map((item, index) => (
             <span
